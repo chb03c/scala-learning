@@ -38,7 +38,7 @@ object App
   		case Profile(_, 7L, _) => //do something else
   		case Profile(Name("Jim", _), _, _) => //do something again
   		case Profile(_, _, firstGroup :: rest) => //firstGroup is the group with index 0 rest is the remaining items in the list
-  	  	case _ => //wild card / catch all
+  	  case _ => //wild card / catch all
     }
   	
   }
