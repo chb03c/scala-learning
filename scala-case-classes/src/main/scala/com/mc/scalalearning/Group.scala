@@ -1,22 +1,22 @@
 package com.mc.scalalearning
 
-class Group 
+class NonCaseGroup 
 {
 	var name: String = ""
 
 	var id: Long = 0L
 }
 
-object Group
+object NonCaseGroup
 {
-	def unapply(group: Group): Option[(String, Long))] =
+	def unapply(group: NonCaseGroup): Option[(String, Long)] =
 	{
 		Some((group.name, group.id))
 	} 
 
-	def apply(name: String, id: Long): Group = 
+	def apply(name: String, id: Long): NonCaseGroup = 
 	{
-		val result = new Group()
+		val result = new NonCaseGroup()
 		result.name = name
 		result.id = id
 		result

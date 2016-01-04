@@ -45,9 +45,9 @@ object App
 
   def patternMatchingGroup()
   {
-    	val group = Group("Blah" 7L)
+    	val group = Group(7L, "Blah")
     	group match{
-    		case Group("Blah", _) => //do something
+    		case Group(_, "Blah") => //do something
     	}
   }
 
@@ -58,7 +58,7 @@ object App
       val test1 = 1 :: Nil
       val test2 = List(1)
 
-      test.equals(test2)
+      test1.equals(test2)
 
       val example = 1 :: 2 :: 3 :: 4 :: Nil
 
@@ -75,10 +75,10 @@ object App
   {
   	    val list = List("Foo", "bar", "baz")
 
-  	    list match{
-  	    	case first :: rest => print(first)
-  	    	case first :: Nil => print(s"There is only one item left in the list $first")
-  	    	case Nil => print("This list is empty")
+  	    list match{   
+          case first :: Nil => println(s"There is only one item left in the list $first")
+  	    	case first :: rest => println(first)
+  	    	case Nil => println("This list is empty")
   	    }
   }
 
@@ -101,7 +101,7 @@ object App
 
     val formattedNames = for{
       _@Profile(Name(firstName, lastName), _, _) <- profiles
-    } yield s"$firstName; $lastName"
+    } yield (s"$firstName; $lastName")
 
     //formattedNames equals a List of Strings with the formatted name:  List(Jim; Bean, Johnny; Bean)
 
