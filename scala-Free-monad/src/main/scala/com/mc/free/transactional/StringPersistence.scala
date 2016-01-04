@@ -1,8 +1,7 @@
 package com.mc.free.transactional
 
 class StringPersistence
-{
-	
+{	
 	def update(model: String): Free[TransactionAction, Either[Error, Long] =
 		Update(model, result => ())
 
