@@ -15,28 +15,28 @@ object App {
 
   	if(item != null)
   	{
-  		val bar = item.bar
-  		if(bar != null)
-  		{
-  			val baz = bar.baz
-  			if(bar.baz != null)
-  			{
-  				return baz.name
+  		  val bar = item.bar
+  		  if(bar != null)
+  		  {
+  			   val baz = bar.baz
+  			   if(bar.baz != null)
+  			   {
+  				    return baz.name
 
-  			}
-  			else
-  			{
-  				return null
-  			}
-  		}
-  		else
-  		{
-  			return null
-  		} 
+  			   }
+  			   else
+  			   {
+  				    return null
+  			   }
+  		  }
+  		  else
+  		  {
+  			   return null
+  		  } 
   	}
   	else
   	{
-  		return null
+  		  return null
   	}
 
 
