@@ -2,13 +2,11 @@ package com.mc.free.transactional
 
 class EntityManager
 {
-	def commit(): Unit = println("Committing")
+	def rollback(): Unit = println("rollback")
 
-	def rollback(): Unit = println("rolling back")
+	def commit(): Unit = println("commt")
 
-	def start(): Unit = println("start")
+	def start(): Unit = println("starting")
 
-	def close(): Unit = println("closing")
-
-	def execute(): Unit = println("executing")
+	def close(): Unit = println("close")
 }

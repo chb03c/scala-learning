@@ -3,7 +3,7 @@ package com.mc.free
 /*
 Definitions: Functor - has a mathmatical definition but for the purpuses of programming 
 						it is anything with a map method with the following method signature
-			  Monad - has a mathmatical definition but for the purpuses of programming 
+			 Monad - has a mathmatical definition but for the purpuses of programming 
 			  			it is anything with a map method witht eh following method signature 
 			  			and a flatMap method with the following method signature
 */
