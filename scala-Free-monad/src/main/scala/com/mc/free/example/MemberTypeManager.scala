@@ -1,6 +1,7 @@
 package com.mc.free.example
 
-import com.mc.free.example.Persistence._
+import com.mc.free.example.PersistencedAction._
+import com.mc.free._
 
 class MemberTypeManager
 {
@@ -14,12 +15,12 @@ class MemberTypeManager
 		} yield result
 	}
 
-	private def put(mt: MemberType): Free[Persistence, Unit] =
+	private def put(mt: MemberType): Free[PersistencedAction, Unit] =
 		More(Put(mt, Done(())))
 
-	private def get(id: Long): Free[Persistence, MemberType]  = 
-		More(Get(id, Done()))
+	private def get(id: Long): Free[PersistencedAction, MemberType]  = 
+		More(Get(id, Done(MemberType(7L, "Member"))))
 
-	private def delete(id: Long): Free[Persistence, Unit] =
+	private def delete(id: Long): Free[PersistencedAction, Unit] =
 		More(Delete(id, Done(())))
 }

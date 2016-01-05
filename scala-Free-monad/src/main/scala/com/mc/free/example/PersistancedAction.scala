@@ -1,10 +1,12 @@
 package com.mc.free.example
 
+import com.mc.free.Functor
+
 sealed trait PersistencedAction[Action]{
 
 }
 
-case class Put[Model, Action](item: Model, action: Action) extends PersistenceAction[Action]
+case class Put[Model, Action](item: Model, action: Action) extends PersistencedAction[Action]
 
 case class Get[Model, Action](id: Long, action: Action) extends PersistencedAction[Action]
 

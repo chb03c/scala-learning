@@ -1,8 +1,11 @@
 package com.mc.free.transactional
 
+import com.mc.free._
+import scala.annotation.tailrec
+
 object Interpruters
 {
-	implicit class HibernateInterpruter[Result](transaction: Free[TransactionAction, Result]) extends AnyVal =
+	implicit class HibernateInterpruter[Result](val transaction: Free[TransactionAction, Result]) extends AnyVal
 	{
 		def lift(): Result =
 		{
@@ -11,15 +14,20 @@ object Interpruters
 			@tailrec
 			def interprut(transaction: Free[TransactionAction, Result]): Result = 
 			{
-				transaction match
-				{
-					case Get(id, onResult) => interprut(onResult(Some("Test")))
-					case Update(model, onResult) => interprut(onResult(Right(7L)))
-					case Delete(id, onResult) => interprut(onResult(Right(8L)))
-					case Rollback(error, _) =>
-						em.rollback()
-						Left(error)
+				transaction match{
+					case More(action) =>
+						action match
+						{
+							case Get(id, onResult) => interprut(onResult(Some(MemberType(7L, "Member"))))
+							case Update(model, onResult) => interprut(onResult(Right(7L)))
+							case Delete(id, onResult) => interprut(onResult(Right(8L)))
+							case Rollback(error, _) =>
+								em.rollback()
+								Left[Error, Long](error)
+						}
+					case Done(result) => result
 				}
+					
 			}
 
 			em.start()
