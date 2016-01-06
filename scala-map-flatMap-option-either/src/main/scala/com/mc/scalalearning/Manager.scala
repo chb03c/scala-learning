@@ -1,3 +1,5 @@
+package com.mc.scalalearning
+
 abstract class Manager
 {
 	def update(): Either[Error, Long]

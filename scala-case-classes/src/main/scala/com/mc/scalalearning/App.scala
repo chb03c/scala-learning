@@ -127,7 +127,7 @@ object App
 
         val someOtherEither: Either[Error, Long] = Right(7L)
 
-        val left@Left(error) = someOtherEither
+        val left2@Left(err) = someOtherEither
 
         //You would get a scala.MatchError: Right(7) (of class scala.util.Right)
   }
