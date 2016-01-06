@@ -6,7 +6,7 @@ package com.mc.scalalearning
 object App 
 {
 
-  def create()
+  def creating()
   {
   	val jim = Name(firstName = "Jim", lastName = "Bean")
   	val jimsGroups = List(Group(id = 8L, name = "Admin"))
@@ -35,8 +35,8 @@ object App
   	jimsProfile match 
   	{
   		case Profile(name, id, groups) => //do something
-  		case Profile(_, 7L, _) => //do something else
-  		case Profile(Name("Jim", _), _, _) => //do something again
+  		case profile@Profile(_, 7L, _) => //do something else
+  		case Profile(name@Name("Jim", _), _, _) => //do something again
   		case Profile(_, _, firstGroup :: rest) => //firstGroup is the group with index 0 rest is the remaining items in the list
   	  case _ => //wild card / catch all
     }
@@ -84,34 +84,52 @@ object App
 
   def patternMatchingForComprensions()
   {
-    val jim = Name(firstName = "Jim", lastName = "Bean")
-    val johnny = jim.copy(firstName = "Johnny")
-    val jimsGroups = List(Group(id = 8L, name = "Admin"))
-    val jimsProfile = Profile(id = 7L, name = jim, groups = jimsGroups)
+        val jim = Name(firstName = "Jim", lastName = "Bean")
+        val johnny = jim.copy(firstName = "Johnny")
+        val jimsGroups = List(Group(id = 8L, name = "Admin"))
+        val jimsProfile = Profile(id = 7L, name = jim, groups = jimsGroups)
 
-    val johnnysProfile = jimsProfile.copy(name = johnny, id = 9L)
+        val johnnysProfile = jimsProfile.copy(name = johnny, id = 9L)
 
-    val profiles = jimsProfile :: johnnysProfile :: Nil
+        val profiles = jimsProfile :: johnnysProfile :: Nil
 
-    val names = for{
-      profile@Profile(name, id, groups) <- profiles
-    } yield name
+        val names = for{
+          profile@Profile(name, id, groups) <- profiles
+        } yield name
 
-    //names equals a List of Name objs: List(Name(Jim, Bean), Name(Johnny, Bean))
+        //names equals a List of Name objs: List(Name(Jim, Bean), Name(Johnny, Bean))
 
-    val formattedNames = for{
-      _@Profile(Name(firstName, lastName), _, _) <- profiles
-    } yield (s"$firstName; $lastName")
+        val formattedNames = for{
+          _@Profile(Name(firstName, lastName), _, _) <- profiles
+        } yield (s"$firstName; $lastName")
 
-    //formattedNames equals a List of Strings with the formatted name:  List(Jim; Bean, Johnny; Bean)
+        //formattedNames equals a List of Strings with the formatted name:  List(Jim; Bean, Johnny; Bean)
 
-    //What would my result be if I had this list:
+        //What would my result be if I had this list:
 
-    val test = Name("Jim", "Bean") :: Group(8L, "Admin") :: Nil
+        val test = Name("Jim", "Bean") :: Group(8L, "Admin") :: Nil
 
-    val example = for{
-      _@Name(fName, lName) <- test
-    } yield fName
+        val example = for{
+          _@Name(fName, lName) <- test
+        } yield fName
+  }
+
+  case class Error()
+
+  def patternMatchingOnEither()
+  {
+        val someEither: Either[Error, Long] = Left(Error())
+
+        val left@Left(error) = someEither
+
+        //The VariableLeft will be equal to someEither and the variable error will be equal to the Error obj inside the Left
+        //What happens if someEither was really a right?
+
+        val someOtherEither: Either[Error, Long] = Right(7L)
+
+        val left@Left(error) = someOtherEither
+
+        //You would get a scala.MatchError: Right(7) (of class scala.util.Right)
   }
 
 }
