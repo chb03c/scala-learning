@@ -19,3 +19,11 @@ Each Project was created with the following maven command:
 mvn archetype:generate -B \
  -DarchetypeGroupId=pl.org.miki -DarchetypeArtifactId=scala-quickstart-archetype -DarchetypeVersion=0.8.2 \
  -DgroupId=<groupId> -DartifactId=<project name> -Dversion=1.0 -Dpackage=<base package>
+
+ Some General Resources: 
+
+ http://www.cakesolutions.net/teamblogs
+
+ http://scalatimes.com/
+
+ https://github.com/alexandru/scala-best-practices
