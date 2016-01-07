@@ -137,4 +137,21 @@ object App
         //You would get a scala.MatchError: Right(7) (of class scala.util.Right)
     }
 
+    def patternMatchWithLoops(): Unit =
+    {
+        val example = 1 :: 2 :: 3 :: 4 :: "Hello" :: Nil
+
+        example.collect({case i: java.lang.Integer if i % 2 == 0 => i})
+
+        example.map({
+            case i: Int if i % 2 == 0=> i
+            case _ => 0
+        })
+
+        example.filter({
+            case i: Int => i % 2 == 0
+            case _ => false
+        })
+    }
+
 }
