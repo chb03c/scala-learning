@@ -3,87 +3,89 @@ package com.mc.scalalearning
 /**
  * @author ${user.name}
  */
-object App 
+object App
 {
 
-  def creating()
-  {
-  	val jim = Name(firstName = "Jim", lastName = "Bean")
-  	val jimsGroups = List(Group(id = 8L, name = "Admin"))
-  	val profile = Profile(id = 7L, name = jim, groups = jimsGroups)
-  }
-
-  def copying()
-  {
-  	val jim = Name(firstName = "Jim", lastName = "Bean")
-  	val johnny = jim.copy(firstName = "Johnny")
-  	val jimsGroups = List(Group(id = 8L, name = "Admin"))
-  	val jimsProfile = Profile(id = 7L, name = jim, groups = jimsGroups)
-
-  	val johnnysProfile = jimsProfile.copy(name = johnny, id = 9L)
-  }
-
-  def patternMatching()
-  {
-  	val jim = Name(firstName = "Jim", lastName = "Bean")
-  	val johnny = jim.copy(firstName = "Johnny")
-  	val jimsGroups = List(Group(id = 8L, name = "Admin"))
-  	val jimsProfile = Profile(id = 7L, name = jim, groups = jimsGroups)
-
-  	val johnnysProfile = jimsProfile.copy(name = johnny, id = 9L)
-
-  	jimsProfile match 
-  	{
-  		case Profile(name, id, groups) => //do something
-  		case profile@Profile(_, 7L, _) => //do something else
-  		case Profile(name@Name("Jim", _), _, _) => //do something again
-  		case Profile(_, _, firstGroup :: rest) => //firstGroup is the group with index 0 rest is the remaining items in the list
-  	  case _ => //wild card / catch all
+    def creating()
+    {
+        val jim = Name(firstName = "Jim", lastName = "Bean")
+        val jimsGroups = List(Group(id = 8L, name = "Admin"))
+        val profile = Profile(id = 7L, name = jim, groups = jimsGroups)
     }
-  	
-  }
 
-  def patternMatchingGroup()
-  {
-    	val group = Group(7L, "Blah")
-    	group match{
-    		case Group(_, "Blah") => //do something
-    	}
-  }
+    def copying()
+    {
+        val jim = Name(firstName = "Jim", lastName = "Bean")
+        val johnny = jim.copy(firstName = "Johnny")
+        val jimsGroups = List(Group(id = 8L, name = "Admin"))
+        val jimsProfile = Profile(id = 7L, name = jim, groups = jimsGroups)
 
-  def doubleCollon()
-  {
-      // variable to the left of the :: is the first item in the List to the right of the :: is the rest of the list
-      //Nil is an empty List (not an empty <file in the blank collection>)
-      val test1 = 1 :: Nil
-      val test2 = List(1)
+        val johnnysProfile = jimsProfile.copy(name = johnny, id = 9L)
+    }
 
-      test1.equals(test2)
+    def patternMatching()
+    {
+        val jim = Name(firstName = "Jim", lastName = "Bean")
+        val johnny = jim.copy(firstName = "Johnny")
+        val jimsGroups = List(Group(id = 8L, name = "Admin"))
+        val jimsProfile = Profile(id = 7L, name = jim, groups = jimsGroups)
 
-      val example = 1 :: 2 :: 3 :: 4 :: Nil
+        val johnnysProfile = jimsProfile.copy(name = johnny, id = 9L)
 
-      //You can exstract items from a list and assign to vars or vals like so
-      val first :: second :: rest = example
-      /*
-        first: Int = 1
-        second: Int = 2
-        rest: List[Int] = List(3, 4)
-      */
-  }
+        jimsProfile match
+        {
+            case Profile(name, id, groups) => //do something
+            case profile@Profile(_, 7L, _) => //do something else
+            case Profile(name@Name("Jim", _), _, _) => //do something again
+            case Profile(_, _, firstGroup :: rest) => //firstGroup is the group with index 0 rest is the remaining items in the list
+            case _ => //wild card / catch all
+        }
 
-  def patternMatchingList()
-  {
-  	    val list = List("Foo", "bar", "baz")
+    }
 
-  	    list match{   
-          case first :: Nil => println(s"There is only one item left in the list $first")
-  	    	case first :: rest => println(first)
-  	    	case Nil => println("This list is empty")
-  	    }
-  }
+    def patternMatchingGroup()
+    {
+        val group = Group(7L, "Blah")
+        group match
+        {
+            case Group(_, "Blah") => //do something
+        }
+    }
 
-  def patternMatchingForComprensions()
-  {
+    def doubleColon()
+    {
+        // variable to the left of the :: is the first item in the List to the right of the :: is the rest of the list
+        //Nil is an empty List (not an empty <file in the blank collection>)
+        val test1 = 1 :: Nil
+        val test2 = List(1)
+
+        test1.equals(test2)
+
+        val example = 1 :: 2 :: 3 :: 4 :: Nil
+
+        //You can exstract items from a list and assign to vars or vals like so
+        val first :: second :: rest = example
+        /*
+          first: Int = 1
+          second: Int = 2
+          rest: List[Int] = List(3, 4)
+        */
+    }
+
+    def patternMatchingList()
+    {
+        val list = List("Foo", "bar", "baz")
+
+        list match
+        {
+            case first :: Nil => println(s"There is only one item left in the list $first")
+            case first :: rest => println(first)
+            case Nil => println("This list is empty")
+        }
+    }
+
+    def patternMatchingForComprensions()
+    {
         val jim = Name(firstName = "Jim", lastName = "Bean")
         val johnny = jim.copy(firstName = "Johnny")
         val jimsGroups = List(Group(id = 8L, name = "Admin"))
@@ -93,14 +95,16 @@ object App
 
         val profiles = jimsProfile :: johnnysProfile :: Nil
 
-        val names = for{
-          profile@Profile(name, id, groups) <- profiles
+        val names = for
+        {
+            profile@Profile(name, id, groups) <- profiles
         } yield name
 
         //names equals a List of Name objs: List(Name(Jim, Bean), Name(Johnny, Bean))
 
-        val formattedNames = for{
-          _@Profile(Name(firstName, lastName), _, _) <- profiles
+        val formattedNames = for
+        {
+            _@Profile(Name(firstName, lastName), _, _) <- profiles
         } yield (s"$firstName; $lastName")
 
         //formattedNames equals a List of Strings with the formatted name:  List(Jim; Bean, Johnny; Bean)
@@ -109,15 +113,16 @@ object App
 
         val test = Name("Jim", "Bean") :: Group(8L, "Admin") :: Nil
 
-        val example = for{
-          _@Name(fName, lName) <- test
+        val example = for
+        {
+            _@Name(fName, lName) <- test
         } yield fName
-  }
+    }
 
-  case class Error()
+    case class Error()
 
-  def patternMatchingOnEither()
-  {
+    def patternMatchingOnEither()
+    {
         val someEither: Either[Error, Long] = Left(Error())
 
         val left@Left(error) = someEither
@@ -130,6 +135,6 @@ object App
         val left2@Left(err) = someOtherEither
 
         //You would get a scala.MatchError: Right(7) (of class scala.util.Right)
-  }
+    }
 
 }
