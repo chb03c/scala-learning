@@ -16,7 +16,8 @@ object App {
 
   case class MemberType(id: Long, name: String, memberTypeType: Int)
 
-  implicit class MemberTypeHelper(memberType: MemberType) extends AnyVal{
+  implicit class MemberTypeHelper(val memberType: MemberType) extends AnyVal
+  {
   	 def calculateExpirationDate(): Date = {
   	 		new Date()
   	 }

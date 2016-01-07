@@ -15,9 +15,19 @@ class StringManager
 
 	def delete(id: Long): Either[Error, Long] = stringPersistence.delete(id).lift()
 
+	private def validate(item: Model): Free[TransactionAction, Either[Error, Long]] =
+	{
+			val error = Error()
+		  More(Rollback(error, Done((Left(error)))))
+	}
+
 	private def process(id: Long): Free[TransactionAction, Either[Error, Long]] =
 		for{
-			item <- (for(i <- stringPersistence.get(id).lift()) yield i) orElse (Rollback(Error(), Done(None)))
+			get <- stringPersistence.get(id)
+
+			Some(item) = for(i <- get) yield i
+
+			valid <- validate(item)
 
 			result <- stringPersistence.update(item)
 

@@ -19,11 +19,14 @@ object Interpruters
 						action match
 						{
 							case Get(id, onResult) => interprut(onResult(Some(MemberType(7L, "Member"))))
-							case Update(model, onResult) => interprut(onResult(Right(7L)))
+							case Update(model, onResult) => em.save(model) match{
+									case success@Right(_) => interprut(onResult(success))
+									case failure@Left(error) => interprut(More(Rollback(error, Done(failure.asInstanceOf[Result]))))
+							}
 							case Delete(id, onResult) => interprut(onResult(Right(8L)))
 							case Rollback(error, _) =>
 								em.rollback()
-								Left[Error, Long](error)
+								Left[Error, Long](error).asInstanceOf[Result]
 						}
 					case Done(result) => result
 				}
@@ -36,6 +39,5 @@ object Interpruters
 			em.close
 			result
 		}
-			
 	}
 }
